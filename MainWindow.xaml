@@ -5,8 +5,142 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LuckyTimer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Lucky Timer" Height="250" Width="450"
+        SizeToContent="WidthAndHeight">
+    <Window.Resources>
+        <Style TargetType="{x:Type GroupBox}">
+            <Setter Property="Margin" Value="1"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+        </Style>
 
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="MaxLength" Value="2"/>
+            <Setter Property="FontSize" Value="40"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="3,3,3,1"/>
+            <EventSetter Event="PreviewTextInput" Handler="TextBox_NumberValidation"/>
+            <EventSetter Event="PreviewKeyDown" Handler="TextBox_PreviewKeyDown"/>
+            <EventSetter Event="LostFocus" Handler="TextBox_LostFocus"/>
+        </Style>
+        
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Margin" Value="0 2 0 0"/>
+        </Style>
+    </Window.Resources>  
+    <Grid Background="LimeGreen">
+        <Grid.Resources>
+            <Style TargetType="{x:Type TextBlock}">
+                <Setter Property="FontSize" Value="45"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <GroupBox Grid.Column="0" Name="groupBox_MainTimerPresets" Header="Main Timer Presets">
+            <StackPanel>
+                <Button Content="0" Click="btn_Preset_Click" Tag="00"/>
+                <Button Content="30 seconds" Click="btn_Preset_Click" Tag="30"/>
+                <Button Content="45 seconds" Click="btn_Preset_Click" Tag="45"/>
+                <Button Content="1 minute" Click="btn_Preset_Click" Tag="01.00"/>
+                <Button Content="25 minute 30 sec" Click="btn_Preset_Click" Tag="25.30"/>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Grid.Column="1" Name="groupBox_SecondTimerPreset" Header="Second Timer Presets">
+            <StackPanel>
+                <Button Content="0" Click="btn_Preset_Click" Tag="00"/>
+                <Button Content="1 min + 1 min" Click="btn_Preset_Click" Tag="1 + 1"/>
+                <Button Content="25 mins + 5 mins" Click="btn_Preset_Click" Tag="25 + 5"/>
+            </StackPanel>
+        </GroupBox>
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox Grid.Column="0" Name="tb_Hours" Text="00"/>
+                <TextBlock Grid.Column="1" Text=":"/>
+                <TextBox Grid.Column="2" Name="tb_Minutes" Text="00"/>
+                <TextBlock Grid.Column="3" Text=":"/>
+                <TextBox Grid.Column="4" Name="tb_Seconds" Text="00"/>
+            </Grid>
+            <Grid Grid.Row="1" IsEnabled="{Binding ElementName=checkBox_secondTimer, Path=IsChecked}" Margin="0 5 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock Grid.Column="0" Name="Second_Timer"/>
+                <TextBox Grid.Column="1" Name="tb_SecTimerMinutes" Text="00"/>
+                <TextBlock Grid.Column="2" Text=":"/>
+                <TextBox Grid.Column="3" Name="tb_SecTimerSeconds" Text="00"/>
+            </Grid>
+            
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                
+                <!-- Column 1 -->
+                <Button Grid.Column="0" 
+                        Name="btn_StartPauseButton" 
+                        Click="btn_StartPauseButton_OnClick" 
+                        Content="Start"></Button>
+                <!-- Column 2 -->
+                <Button Grid.Column="1"
+                        Name="btn_Stop"
+                        Click="btn_Stop_Click" 
+                        Visibility="Visible" 
+                        Content="Stop"></Button>
+            </Grid>
+            <StackPanel Grid.Row="3" 
+                  VerticalAlignment="Top" 
+                  HorizontalAlignment="Left"
+                  Margin="1 5 1 1">
+                <!-- Second Timer -->
+                <CheckBox 
+                    Name="checkBox_secondTimer"
+                    Content="Second Timer"/>
+                <!-- Sounds -->
+                <CheckBox Name="checkBox_sound" 
+                          Content="Use Sound Alerts" 
+                          Margin="0 0 0 0" 
+                          IsChecked="True" 
+                          FontStyle="Italic"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                
+                    <RadioButton Grid.Row="0" x:Name="soundRadioBtn1" IsChecked="True" Content="1"/>
+                    <RadioButton Grid.Row="1" x:Name="soundRadioBtn2" Content="2"/>
+                    <RadioButton Grid.Row="2" x:Name="soundRadioBtn3" Content="3"/>
+                </Grid>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>
