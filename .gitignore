@@ -1,4 +1,7 @@
 bin/
+.idea/
+.vs/
+properties/
 obj/
 /packages/
 riderModule.iml

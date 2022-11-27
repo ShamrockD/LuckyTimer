@@ -43,9 +43,6 @@ namespace LuckyTimer
         private int _secondTimerBeforeLaunchSeconds = 0;
         private int _secondTimerBeforeLaunchMinutes = 0;
 
-        // Icons for Notification from WinForms
-        //private System.Windows.Forms.NotifyIcon _notifyIcon;
-
         #endregion
         
         public MainWindow()
@@ -73,6 +70,11 @@ namespace LuckyTimer
                         if (checkBox_sound.IsChecked == true)
                         {
                             PlaySound();
+                        }
+
+                        if (TurnOffPc.IsChecked == true && checkBox_secondTimer.IsChecked == false)
+                        {
+                            ShutDownPc();
                         }
 
                         if (checkBox_secondTimer.IsChecked == true)
@@ -113,6 +115,11 @@ namespace LuckyTimer
                 _seconds -= 1;
                 tb_Seconds.Text = _seconds.ToString("00");
             }
+        }
+
+        private void ShutDownPc()
+        {
+            System.Diagnostics.Process.Start("shutdown", "/s /t 0");
         }
 
         private void EnableButtons()
@@ -328,7 +335,14 @@ namespace LuckyTimer
                 {
                     for (int j = 3; j > 0; j--)
                     {
-                        Console.Beep(4500, 50);
+                        System.Threading.Thread playSoundThread = new System.Threading.Thread(
+                            new System.Threading.ThreadStart(
+                                delegate()
+                                {
+                                    Console.Beep(4500, 50);
+                                }
+                            ));
+                        playSoundThread.Start();
                     }
                 }
             }
@@ -339,7 +353,15 @@ namespace LuckyTimer
                 {
                     for (int j = 3; j > 0; j--)
                     {
-                        Console.Beep(2500, 50);
+                        System.Threading.Thread playSoundThread = new System.Threading.Thread(
+                            new System.Threading.ThreadStart(
+                                delegate()
+                                {
+                                    Console.Beep(2500, 50);
+                                }
+                            ));
+                        playSoundThread.Start();
+                        
                     }
                 }
             }
@@ -350,7 +372,15 @@ namespace LuckyTimer
                 {
                     for (int j = 3; j > 0; j--)
                     {
-                        Console.Beep(1500, 50);
+                        System.Threading.Thread playSoundThread = new System.Threading.Thread(
+                            new System.Threading.ThreadStart(
+                                delegate()
+                                {
+                                    Console.Beep(6500, 50);
+                                }
+                            ));
+                        playSoundThread.Start();
+                        
                     }
                 }
             }
