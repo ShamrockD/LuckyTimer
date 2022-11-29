@@ -72,7 +72,7 @@ namespace LuckyTimer
                             PlaySound();
                         }
 
-                        if (TurnOffPc.IsChecked == true && checkBox_secondTimer.IsChecked == false)
+                        if (checkBox_TurnOffPc.IsChecked == true && checkBox_secondTimer.IsChecked == false)
                         {
                             ShutDownPc();
                         }
@@ -229,6 +229,11 @@ namespace LuckyTimer
                     if (checkBox_sound.IsChecked == true)
                     {
                         PlaySound();
+                    }
+
+                    if (checkBox_TurnOffPc.IsChecked == true)
+                    {
+                        ShutDownPc();
                     }
 
                     btn_StartPauseButton.Content = "Start";
